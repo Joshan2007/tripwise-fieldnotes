@@ -2,21 +2,15 @@
 
 **A little curiosity. A great escape.**
 
-Frontend Development submission for the AWS Student Builder Group, VIT Chennai recruitment task.
-
 TripWise turns travel inspiration into a personal plan. Discover a curated shortlist of destinations with live place information, read the story behind each place, and collect your favorites into a day-by-day itinerary that survives refresh.
 
 ![TripWise desktop experience](screenshots/01-explore-desktop.png)
 
 **Track:** Frontend Development · **Stack:** HTML, CSS, JavaScript · **Product backend:** None · **Persistence:** Browser localStorage
 
-**Register number:** 25BCE1757 · **Track:** Frontend Development
-
 **Live website:** [tripwise-fieldnotes.vercel.app](https://tripwise-fieldnotes.vercel.app)
 
 **Source code:** [Joshan2007/tripwise-fieldnotes](https://github.com/Joshan2007/tripwise-fieldnotes)
-
-**Submission screenshots:** [25BCE1757_frontend.pdf](25BCE1757_frontend.pdf)
 
 ## The experience
 
@@ -96,18 +90,6 @@ Verified in Chrome: live API returned 12 destinations; combined India + Asia + A
 ## Deployment and submission
 
 The target host is **Vercel**. Import `Joshan2007/tripwise-fieldnotes`, select framework **Other**, and keep the repository root as the project root. The included `vercel.json` runs `npm run check` and publishes `dist/`. No API keys, database configuration or environment variables are required. Verify the final production URL in a signed-out browser before submitting it to the judges.
-
-The brief requires a **public GitHub repository**, an **accessible live website**, this README, and a **screenshots PDF** covering Explore, Details, My Trip, desktop/mobile and key states. The submission file is [25BCE1757_frontend.pdf](25BCE1757_frontend.pdf), already named with the applicant's register number and chosen track.
-
-### Submission checklist
-
-- [x] Frontend source code and setup instructions.
-- [x] All mandatory frontend features implemented.
-- [x] Real external API with no private credentials required.
-- [x] Screenshots PDF covering the major views, mobile and key states.
-- [x] Public Vercel website deployment and unauthenticated accessibility check.
-- [x] Name the screenshots PDF `25BCE1757_frontend.pdf`.
-- [ ] Submit the repository URL, live URL and screenshots PDF through the organizer's submission channel.
 
 ## Screenshots
 
