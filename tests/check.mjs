@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import vm from 'node:vm';
+import {destinations,categories,heroImage} from '../dist/data.js';
+// Exercise production data-handling code with controlled network/storage boundaries.
+const original=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
+const source=original.slice(original.indexOf('\n')+1,original.indexOf("$('#details').addEventListener('close'"));
+const memory=new Map();
+const context=vm.createContext({destinations,categories,heroImage,URL,URLSearchParams,AbortController,console,setTimeout,clearTimeout,location:{hash:''},document:{querySelector:()=>({})},localStorage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)},fetch:async()=>{throw new Error('offline');}});
+vm.runInContext(source+'\nrender=()=>{}; updateCount=()=>{};',context);
+const run=s=>vm.runInContext(s,context);
+run('state.places=destinations; state.query="India"; state.region="Asia"; state.sort="az"');
+assert.equal(run('filteredPlaces().map(p=>p.name).join(",")'),'Alleppey,Hampi,Leh,Munnar');
+run('state.category="Nature"');assert.equal(run('filteredPlaces()[0].name'),'Munnar');
+run('state.query="does-not-exist"');assert.equal(run('filteredPlaces().length'),0);
+assert.equal(run('safeUrl("javascript:alert(1)")'),'');
+assert.equal(run('esc("<script>")'),'&lt;script&gt;');
+memory.set('tripwise.fieldnotes.v1','{broken');assert.equal(run('restoreTrip().items.length'),0);
+memory.set('tripwise.fieldnotes.v1',JSON.stringify({days:3,items:[{id:'Munnar',day:50,note:'hello'},{id:'Munnar',day:1},{id:'bad'}]}));
+assert.equal(run('restoreTrip().items.length'),1);assert.equal(run('restoreTrip().items[0].day'),14);
+await run('loadPlaces()');assert.equal(run('state.loading'),false);assert.equal(run('state.places.length'),0);assert.match(run('state.error'),/couldn’t load/);
+memory.set('tripwise.places.v1',JSON.stringify({places:[{...destinations[2],description:'A real previously cached response.'}]}));
+await run('loadPlaces()');assert.equal(run('state.cached'),true);assert.equal(run('state.places.length'),1);
+memory.delete('tripwise.places.v1');context.fetch=async()=>({ok:true,json:async()=>({error:{code:'bad'}})});
+await run('loadPlaces()');assert.equal(run('state.places.length'),0);assert.ok(run('state.error'));
+console.log('PASS: combined search/filter/sort; empty results; URL/HTML escaping; corrupt storage; duplicate/invalid saved items; day bounds; failed network; cached fallback; malformed API response.');

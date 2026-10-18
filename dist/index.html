@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3eb"><meta name="description" content="Collect places, follow your curiosity, and turn someday into a day-by-day itinerary. TripWise is your personal travel field journal.">
+  <title>TripWise — Your next chapter starts here</title>
+  <link rel="stylesheet" href="styles.css"><script type="module" src="app.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="topbar"><a class="brand" href="#explore" aria-label="TripWise home"><span class="brand-icon">↗</span>tripwise<span class="brand-dot">.</span></a><nav aria-label="Main navigation"><a href="#explore" data-nav="explore">Explore</a><a href="#trip" data-nav="trip">My Trip <span id="trip-count">0</span></a></nav><span class="header-note">A little curiosity. A great escape.</span><button class="button small outline" id="surprise">Surprise me <span aria-hidden="true">↗</span></button></header>
+  <main id="main" tabindex="-1"></main>
+  <footer><a class="brand" href="#explore">tripwise.</a><p>Less scrolling. More going.</p><span>Place information: <a href="https://en.wikipedia.org" target="_blank" rel="noopener">Wikipedia</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA</a><br>Photographs retain their original licenses. See each destination’s source.</span></footer>
+  <dialog id="details" aria-labelledby="detail-title"></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
