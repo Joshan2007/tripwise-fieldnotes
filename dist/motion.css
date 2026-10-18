@@ -1,0 +1,38 @@
+/* Motion follows the pace of a travel journal: settle, reveal, collect. */
+:root{--ease-travel:cubic-bezier(.22,1,.36,1)}
+#trip-count{display:inline-block}
+.photo-credit{font-size:9px;line-height:1.6;color:var(--muted);margin:0 0 10px;overflow-wrap:anywhere}.photo-credit a{text-underline-offset:2px}.detail-body>.photo-credit{margin-top:18px}.trip-item .photo-credit{font-size:8px}
+@media(prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .button,.chip,.save-button,.icon-control,.close{transition:transform .28s var(--ease-travel),background-color .2s,color .2s,box-shadow .28s}
+  .button:active,.chip:active,.save-button:active,.icon-control:active{transform:scale(.96)}
+  .button>span{display:inline-block;transition:transform .35s var(--ease-travel)}
+  .button:hover>span{transform:translate(3px,-2px)}
+  nav a:after{transition:transform .35s var(--ease-travel);transform-origin:left}
+  nav a:not(.active):after{content:'';position:absolute;left:0;right:0;bottom:-26px;height:2px;background:var(--orange);transform:scaleX(0)}
+  nav a:not(.active):hover:after{transform:scaleX(1)}
+  .card{transition:transform .4s var(--ease-travel),box-shadow .4s,border-color .3s}
+  .card-image img{transition:transform .8s var(--ease-travel)}
+  .searchbox input,select,textarea,.field input{transition:border-color .25s,box-shadow .25s,background-color .25s}
+  .searchbox input:focus,.field input:focus,textarea:focus{border-color:var(--orange);box-shadow:0 0 0 3px #d45a3510}
+  .text-button,.source-link,.title-button{transition:color .2s}
+  .source-link:hover,.title-button:hover{color:var(--orange)}
+  .motion-pending{opacity:0}
+  .route-sketch svg>path:first-child{animation:route-wander 2s var(--ease-travel) 1}
+  dialog[open]::backdrop{animation:backdrop-arrive .28s ease-out}
+  #toast{transition:opacity .25s,transform .4s var(--ease-travel)}
+  @keyframes route-wander{from{stroke-dashoffset:65;opacity:.2}to{stroke-dashoffset:0;opacity:1}}
+  @keyframes backdrop-arrive{from{background:transparent;backdrop-filter:blur(0)}to{background:#172f29a8;backdrop-filter:blur(4px)}}
+}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .button:hover{transform:translateY(-2px);box-shadow:0 5px 12px #243e3512}
+  .save-button:hover{transform:rotate(8deg) scale(1.08)}
+  .close:hover{transform:rotate(90deg)}
+  .hero-art .ticket{transition:transform .7s var(--ease-travel)}
+  .hero-art:hover .ticket{transform:translateY(-5px) rotate(-3deg)}
+  .stamp{transition:transform .8s var(--ease-travel)}
+  .hero-art:hover .stamp{transform:rotate(8deg)}
+}
+@media(max-width:700px){nav a:not(.active):after{bottom:-19px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.motion-pending{opacity:1!important}}
+@media print{.motion-pending{opacity:1!important;transform:none!important}}

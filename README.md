@@ -10,7 +10,9 @@ TripWise turns travel inspiration into a personal plan. Discover a curated short
 
 **Track:** Frontend Development · **Stack:** HTML, CSS, JavaScript · **Product backend:** None · **Persistence:** Browser localStorage
 
-**Deployment status:** Source published to GitHub. The website has not been deployed yet; deployment is intentionally deferred until the design is approved. A publicly accessible live link is still required before the final recruitment submission.
+**Register number:** 25BCE1757 · **Track:** Frontend Development
+
+**Deployment:** Configured for Vercel with `vercel.json`. The public URL will be added after the Vercel account connection is available and production deployment is verified.
 
 ## The experience
 
@@ -32,6 +34,7 @@ Open http://127.0.0.1:4173. Serve the app over HTTP; do not double-click index.h
 ```sh
 npm run check
 node tests/check.mjs
+node tests/motion.mjs
 ```
 
 ## Mandatory frontend features
@@ -57,6 +60,7 @@ Semantic HTML, CSS Grid/Flexbox, vanilla JavaScript ES modules, browser localSto
 - `dist/styles.css`: layout, design system, responsive and print styles.
 - `dist/data.js`: curated destination identifiers and editorial metadata.
 - `dist/app.js`: API integration, view rendering, combined filters, itinerary and persistence.
+- `dist/motion.js` and `dist/motion.css`: progressive animation layer and interaction transitions.
 - `server.mjs`: local static file server; it does not implement product APIs or store itinerary data.
 - `tests/check.mjs`: deterministic network/storage and filtering checks against the production code.
 - `screenshots/`: screenshots captured from the browser for the submission PDF.
@@ -65,7 +69,7 @@ Semantic HTML, CSS Grid/Flexbox, vanilla JavaScript ES modules, browser localSto
 
 Endpoint: `https://en.wikipedia.org/w/api.php`
 
-An anonymous GET request uses `action=query`, `origin=*`, `redirects=1`, and `prop=extracts|pageimages|coordinates` with the curated Wikipedia titles. `exintro=1` and `explaintext=1` return introductory plain text; `pithumbsize=900` requests a photo thumbnail. Returned `query.pages` records are matched to the editorial shortlist, following redirects. No private API keys or credentials are used.
+An anonymous GET request uses `action=query`, `origin=*`, `redirects=1`, and `prop=extracts|pageimages|coordinates` with the curated Wikipedia titles. `exintro=1` and `explaintext=1` return introductory plain text; `pithumbsize=900` requests a photo thumbnail. Returned `query.pages` records are matched to the editorial shortlist, following redirects. A second batch request uses `prop=imageinfo` to retrieve photographer and license metadata for the returned images. No private API keys or credentials are used. Filtering and sorting run locally without additional requests.
 
 Destination titles are curated in data.js, while descriptions, photos and coordinates are loaded live. Search operates over the returned shortlist; this is not a worldwide arbitrary-city search. Visit lengths and categories are editorial suggestions, not API-provided availability or booking data.
 
@@ -79,7 +83,7 @@ Documentation: https://www.mediawiki.org/wiki/API:Main_page and https://www.medi
 
 ## Credits
 
-Destination text: Wikipedia contributors, CC BY-SA; each destination links to its full article. Photographs retain their own licenses and attribution requirements, accessible through the destination photo credit link. Hero photograph: Bali temple, served by Unsplash (`photo-1537996194471-e657df975ab4`). Fonts: DM Sans and Playfair Display through Google Fonts, with system fallbacks.
+Destination text: Wikipedia contributors, CC BY-SA; each destination links to its full article. Each destination photograph displays its photographer, license, source link, and a notice that it has been cropped. These values come from Wikimedia image metadata. Images whose attribution cannot be retrieved are omitted while the destination remains usable. Hero photograph: Bali temple, served by Unsplash (`photo-1537996194471-e657df975ab4`), under the [Unsplash License](https://unsplash.com/license). Fonts: DM Sans and Playfair Display through Google Fonts, with system fallbacks.
 
 ## Verification
 
@@ -87,9 +91,9 @@ Verified in Chrome: live API returned 12 destinations; combined India + Asia + A
 
 ## Deployment and submission
 
-Upload the contents of `dist/` to any static host (GitHub Pages, Netlify, Vercel or similar). No build command or environment variables are required. Website deployment is currently deferred at the project owner's request. Publish the site and verify its URL in a signed-out browser before submitting it to the judges.
+The target host is **Vercel**. Import `Joshan2007/tripwise-fieldnotes`, select framework **Other**, and keep the repository root as the project root. The included `vercel.json` runs `npm run check` and publishes `dist/`. No API keys, database configuration or environment variables are required. Verify the final production URL in a signed-out browser before submitting it to the judges.
 
-The brief requires a **public GitHub repository**, an **accessible live website**, this README, and a **screenshots PDF** covering Explore, Details, My Trip, desktop/mobile and key states. The [screenshots PDF](TripWise_frontend.pdf) is included. Rename it to `<your-register-number>_frontend.pdf` before submitting. A video was referenced but not supplied; this implementation follows the provided PDF brief.
+The brief requires a **public GitHub repository**, an **accessible live website**, this README, and a **screenshots PDF** covering Explore, Details, My Trip, desktop/mobile and key states. The submission file is [25BCE1757_frontend.pdf](25BCE1757_frontend.pdf), already named with the applicant's register number and chosen track.
 
 ### Submission checklist
 
@@ -98,7 +102,7 @@ The brief requires a **public GitHub repository**, an **accessible live website*
 - [x] Real external API with no private credentials required.
 - [x] Screenshots PDF covering the major views, mobile and key states.
 - [ ] Public website deployment and signed-out accessibility check.
-- [ ] Rename the screenshots PDF using the applicant's register number.
+- [x] Name the screenshots PDF `25BCE1757_frontend.pdf`.
 - [ ] Submit the repository URL, live URL and screenshots PDF through the organizer's submission channel.
 
 ## Screenshots
@@ -111,18 +115,19 @@ Mobile Explore, Details and My Trip screenshots are included in `screenshots/` a
 
 ## Scope and tradeoffs
 
+### Motion direction
+
+Animations follow the quiet pace of the travel-journal design: staggered text entrances, a postcard photo reveal, settling stamp and ticket, scroll-triggered destination reveals, button and image hover feedback, a collection-count bounce, dialog entrance, and smooth itinerary reordering. A short dotted-route animation adds a small travel detail to the trip summary.
+
+Motion uses native browser APIs with no animation library. IntersectionObserver runs reveals when content enters the viewport; transforms and opacity carry the entrance animations. Reveals run once per rendered element. System reduced-motion preferences disable CSS and JavaScript motion, cancel active animations when changed, and make discovery scrolling immediate. Print output keeps reveal content visible. Hover effects apply only to devices with hover support.
+
+Design reference: [A Short Journey on Awwwards](https://www.awwwards.com/sites/a-short-journey), adapted to TripWise's own postcard and journal visual language. Accessibility reference: [W3C SCR40](https://www.w3.org/WAI/WCAG21/Techniques/client-side-script/SCR40).
+
+### Product boundaries
+
 - A focused list of 12 destinations makes discovery predictable and keeps the initial API request small. The interface clearly searches this shortlist rather than claiming to search every destination worldwide.
 - The app calls the external API directly from the browser, which fits the frontend track. A database or custom product backend is not required.
 - The route illustration is decorative. Real coordinates link out to OpenStreetMap; the app does not claim to calculate an optimized route or travel times.
 - Itinerary data is local to the current browser. There is no account system or cross-device synchronization.
 - Live place information, third-party images and web fonts depend on external services. The app includes service failure, cached data and image fallback behavior, with system fonts available when font loading fails.
 - Suggested visit lengths and categories are editorial metadata. Booking, weather and price feeds are outside this implementation's scope.
-
-## Explain it in the interview
-
-1. The app fetches Wikipedia data once, then derives search/filter/sort views without extra API requests.
-2. Editorial metadata and live API content have separate roles.
-3. The itinerary stores destination IDs and personal planning fields rather than duplicating live descriptions.
-4. UI rendering derives from shared state; localStorage restores it after refresh.
-5. Native dialog handles keyboard focus trapping and Escape dismissal.
-6. Failure and empty states are designed as part of the normal flow.

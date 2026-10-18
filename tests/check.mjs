@@ -4,7 +4,7 @@ import vm from 'node:vm';
 import {destinations,categories,heroImage} from '../dist/data.js';
 // Exercise production data-handling code with controlled network/storage boundaries.
 const original=await readFile(new URL('../dist/app.js',import.meta.url),'utf8');
-const source=original.slice(original.indexOf('\n')+1,original.indexOf("$('#details').addEventListener('close'"));
+const source=original.slice(original.indexOf('\n')+1,original.indexOf("$('#details').addEventListener('close'")).replace(/^import .+;$/gm,'');
 const memory=new Map();
 const context=vm.createContext({destinations,categories,heroImage,URL,URLSearchParams,AbortController,console,setTimeout,clearTimeout,location:{hash:''},document:{querySelector:()=>({})},localStorage:{getItem:k=>memory.get(k)||null,setItem:(k,v)=>memory.set(k,v)},fetch:async()=>{throw new Error('offline');}});
 vm.runInContext(source+'\nrender=()=>{}; updateCount=()=>{};',context);
