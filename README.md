@@ -115,7 +115,7 @@ The brief requires a **public GitHub repository**, an **accessible live website*
 ![Destination details](screenshots/02-details-desktop.png)
 ![Day-by-day itinerary](screenshots/03-my-trip-desktop.png)
 
-Desktop and mobile Explore, Details and My Trip screenshots are included in `screenshots/` and in the PDF. The 15-page PDF preserves the original screenshots and adds five actual phone screenshots covering destination details, My Trip, the journey summary, Android print preview, and Explore.
+The 12-page PDF uses a plain white A4 document layout with simple headings and page numbers. It includes the desktop views and key states, plus five actual phone screenshots covering destination details, My Trip, the journey summary, Android print preview, and Explore. The earlier simulated mobile screenshots have been removed from the PDF.
 
 ## Scope and tradeoffs
 
