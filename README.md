@@ -12,7 +12,11 @@ TripWise turns travel inspiration into a personal plan. Discover a curated short
 
 **Register number:** 25BCE1757 · **Track:** Frontend Development
 
-**Deployment:** Configured for Vercel with `vercel.json`. The public URL will be added after the Vercel account connection is available and production deployment is verified.
+**Live website:** [tripwise-fieldnotes.vercel.app](https://tripwise-fieldnotes.vercel.app)
+
+**Source code:** [Joshan2007/tripwise-fieldnotes](https://github.com/Joshan2007/tripwise-fieldnotes)
+
+**Submission screenshots:** [25BCE1757_frontend.pdf](25BCE1757_frontend.pdf)
 
 ## The experience
 
@@ -87,7 +91,7 @@ Destination text: Wikipedia contributors, CC BY-SA; each destination links to it
 
 ## Verification
 
-Verified in Chrome: live API returned 12 destinations; combined India + Asia + A-Z returns Alleppey, Hampi, Leh, Munnar; no-match search shows the empty state; add from details/card; notes, name and day assignment persist after refresh; native modal; reorder controls; responsive 390px layout with no horizontal overflow. Automated checks cover failed network, cached fallback, malformed responses, invalid/corrupt storage, duplicates and escaping.
+Verified in Chrome: live API returned 12 destinations; combined India + Asia + A-Z returns Alleppey, Hampi, Leh, Munnar; no-match search shows the empty state; add from details/card; notes, name and day assignment persist after refresh; native modal; reorder controls; responsive 390px layout with no horizontal overflow. Automated checks cover failed network, cached fallback, malformed responses, invalid/corrupt storage, duplicates and escaping. On the Vercel production site, an unauthenticated request returned HTTP 200, all 12 destinations and photographer/license credits loaded, and an itinerary item remained after refresh. Browser error logs were empty during this check.
 
 ## Deployment and submission
 
@@ -101,7 +105,7 @@ The brief requires a **public GitHub repository**, an **accessible live website*
 - [x] All mandatory frontend features implemented.
 - [x] Real external API with no private credentials required.
 - [x] Screenshots PDF covering the major views, mobile and key states.
-- [ ] Public website deployment and signed-out accessibility check.
+- [x] Public Vercel website deployment and unauthenticated accessibility check.
 - [x] Name the screenshots PDF `25BCE1757_frontend.pdf`.
 - [ ] Submit the repository URL, live URL and screenshots PDF through the organizer's submission channel.
 
